@@ -4,7 +4,7 @@ app.controller("TeamController", function($scope) {
 
     function init_counts() {
 	$scope.teamList = [];
-	$scope.scoreList = {}; // {"Team1": {"Team2":4, "Team3":8}, "Team2": {"Team1": 3}, "Team3": {"Team1":9}}
+//	$scope.scoreList = {}; // {"Team1": {"Team2":4, "Team3":8}, "Team2": {"Team1": 3}, "Team3": {"Team1":9}}
 	$scope.backlinks = {}; // who links to me?
 	
 	$scope.pageRank = {} // pagerank PR(A) = (1 - d) + d( PR(B)/ fraction(B->A), PR(C)/ fraction(C->A))
@@ -15,10 +15,12 @@ app.controller("TeamController", function($scope) {
 	$scope.prList = [];
     }
 
+/*
     function addScores(team1, team2, score1, score2) {
 	addScore(team1, team2, score1);
 	addScore(team2, team1, score2);
     }
+*/
 
     function addLink(giver, receiver, score) {
 	if (score == 0)
@@ -44,6 +46,7 @@ app.controller("TeamController", function($scope) {
 	addLink(team2, team1, score1);
     }
 
+/*
     function addScore(team1, team2, score) {
 	if (!(team1 in $scope.scoreList)) {
 	    $scope.scoreList[team1] = {};
@@ -55,6 +58,7 @@ app.controller("TeamController", function($scope) {
 	var previous = $scope.scoreList[team1][team2];
 	$scope.scoreList[team1][team2] = previous + Number(score);
     }
+*/
 
     function addTeamName(team) {
 	if ($scope.teamList.indexOf(team) == -1)
@@ -86,7 +90,7 @@ app.controller("TeamController", function($scope) {
 
 	    addTeamName(team1);
 	    addTeamName(team2);
-	    addScores(team1, team2, score1, score2);
+//	    addScores(team1, team2, score1, score2);
 	    addLinks(team1, team2, score1, score2);
 	    
 	    // $scope.teamList.push({ team1: team1, team2: team2, score1: score1, score2: score2, status: "happy"
@@ -151,20 +155,20 @@ app.controller("TeamController", function($scope) {
 //	console.log("teamList " + JSON.stringify($scope.teamList));
 //	console.log("linkSum " + JSON.stringify($scope.linkSum));
 //	console.log("linkCount " + JSON.stringify($scope.linkCount));
-	console.log("backlinks " + JSON.stringify($scope.backlinks));
+//	console.log("backlinks " + JSON.stringify($scope.backlinks));
 //	console.log("scoreList " + JSON.stringify($scope.scoreList));
-	console.log("fractions " + JSON.stringify($scope.fractions));
-	console.log("PR " + JSON.stringify($scope.pageRank));
+//	console.log("fractions " + JSON.stringify($scope.fractions));
+//	console.log("PR " + JSON.stringify($scope.pageRank));
 	
 	var keys = Object.keys($scope.pageRank);
 //	keys.sort( function(a,b) {return a>b;});
 	keys.sort( function(a,b) {return $scope.pageRank[a] <= $scope.pageRank[b];});
 
-	console.log("Keys " + JSON.stringify(keys));
+//	console.log("Keys " + JSON.stringify(keys));
 	for (var k in keys ) {
 	    var x = keys[k];
 	    var daNum = (Math.round( $scope.pageRank[ x ] * 100) / 100);
-	    console.log( daNum + "," + x);
+//	    console.log( daNum + "," + x);
 	    $scope.prList.push({team: x, pagerank: Number(daNum) });
 	}
 

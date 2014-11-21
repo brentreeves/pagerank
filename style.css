@@ -5,8 +5,8 @@ H2 { font-size:120%; background-color:#30055C; color:white; padding-left:5; padd
 H3 { background-color:#807090; color:white; padding-left:5;  padding-bottom:2; margin-top:6pt; margin-bottom:6pt;}
 H4 { margin-bottom:3px; margin-top:6pt; }
 TT { font-size:110%; font-weight:900; white-space:nowrap; }
-PRE { font-size:90%; }
-TABLE { border-collapse:collapse; }
+PRE { font-size:110%; }
+TABLE { border-collapse:collapse; border: 1px solid #aca899}
 A:link, A:visited, A:active { color:#30055c; text-decoration: none; }
 .cmd { background-color:black; color:white; border:1px solid black; padding:3px; font-weight:bold; }
 .cmd2 { border:1px solid black; padding:3px; font-weight:bold; }
@@ -19,9 +19,10 @@ tr.dim th,tr.dim td{ color:#ddd; }
 .math { font-family:Times,Times Roman,serif; font-style:italic; font-weight:bold; white-space:nowrap; }
 .box { border:1px solid black; padding:3px; padding-left:8px; padding-right:8px; }
 
-th { white-space:nowrap; }
+th { white-space:nowrap; background-color: #ece9d8; border 1px solid #aca899; padding: 2px}
+td { border: 1px solid #aca899; padding: 4px }
 tr.line th { border-bottom: 1px solid black;}
-td#r, th#r { text-align:right; padding-right:.5em; vertical-align:top; }
+td#r, th#r { text-align:right; padding-right:.5em; vertical-align:top; border: 1px solid #aca899}
 td#c, th#c { text-align:center; padding-right:.5em; vertical-align:top; }
 td#l, th#l { text-align:left; padding-left:.5em; vertical-align:top; }
 span.input { color:red; }
