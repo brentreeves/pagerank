@@ -4,7 +4,6 @@ app.controller("TeamController", function($scope) {
 
     function init_counts() {
 	$scope.teamList = [];
-//	$scope.scoreList = {}; // {"Team1": {"Team2":4, "Team3":8}, "Team2": {"Team1": 3}, "Team3": {"Team1":9}}
 	$scope.backlinks = {}; // who links to me?
 	
 	$scope.pageRank = {} // pagerank PR(A) = (1 - d) + d( PR(B)/ fraction(B->A), PR(C)/ fraction(C->A))
@@ -45,20 +44,6 @@ app.controller("TeamController", function($scope) {
 	addLink(team1, team2, score2);
 	addLink(team2, team1, score1);
     }
-
-/*
-    function addScore(team1, team2, score) {
-	if (!(team1 in $scope.scoreList)) {
-	    $scope.scoreList[team1] = {};
-	}
-	if (!(team2 in $scope.scoreList[team1])) {
-	    $scope.scoreList[team1][team2] = 0;
-	}
-	
-	var previous = $scope.scoreList[team1][team2];
-	$scope.scoreList[team1][team2] = previous + Number(score);
-    }
-*/
 
     function addTeamName(team) {
 	if ($scope.teamList.indexOf(team) == -1)
@@ -156,7 +141,6 @@ app.controller("TeamController", function($scope) {
 //	console.log("linkSum " + JSON.stringify($scope.linkSum));
 //	console.log("linkCount " + JSON.stringify($scope.linkCount));
 //	console.log("backlinks " + JSON.stringify($scope.backlinks));
-//	console.log("scoreList " + JSON.stringify($scope.scoreList));
 //	console.log("fractions " + JSON.stringify($scope.fractions));
 //	console.log("PR " + JSON.stringify($scope.pageRank));
 	
