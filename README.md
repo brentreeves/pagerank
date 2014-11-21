@@ -1,12 +1,12 @@
 pagerank
 ========
 
-javascript pagerank for sports teams
+javascript pagerank for sports teams.
 
 Copy/paste some csv data like this:
 
-team A,team B,2,1
-team C,team D,9,0
+> team A,team B,2,1
+> team C,team D,9,0
 
 Fields are team1, team2, team1-points, team2-points.
 The example above means Team A beat Team B 2-1, and Team C beat Team D 9-0.
