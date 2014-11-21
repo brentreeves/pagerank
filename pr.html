@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html ng-app="pager">
+  <head>
+    <meta charset="utf-8" />
+    <title>BNR Pagerank</title>
+    <script>document.write('<base href="' + document.location + '" />');</script>
+    <link rel="stylesheet" href="style.css" />
+    <script data-require="angular.js@1.2.x" src="https://code.angularjs.org/1.2.16/angular.js" data-semver="1.2.16"></script>
+    <script src="app.js"></script>
+  </head>
+
+  <body ng-controller="TeamController">
+
+    <p>Enter scores here: Team1, Team2, Score1, Score2, Date</p>
+      <textarea name="scores" ng-model="scoreData" id="" cols="50" rows="10" 
+                ng-init="scoreData='Page A,Page B,0,1,1/1/2014
+Page A,Page C,1,1,1/1/2014
+Page B,Page C,0,1,2/1/2014
+Page D,Page C,0,1,2/1/2014
+'">
+      </textarea>
+
+      <table>
+        <tr>
+          <th>Team</th>
+          <th>Pagerank</th>
+        </tr>
+<!-- -        <tr ng-repeat="i in prList | orderBy:pagerank:reverse"> -->
+        <tr ng-repeat="i in prList">
+          <td>{{i.team}}</td>
+          <td>{{i.pagerank}}</td>
+        </tr>
+      </table>
+
+  </body>
+
+</html>
