@@ -1,0 +1,27 @@
+BODY { margin-left:30px; margin-right:10px; font-family:Lucida Grande, Verdana, Sans-serif; color:#444; }
+P, TD { margin-top:6pt; margin-bottom:6pt;}
+H1 { color:#000; font-size:130% }
+H2 { font-size:120%; background-color:#30055C; color:white; padding-left:5; padding-bottom:2; margin-top:6pt; margin-bottom:6pt;}
+H3 { background-color:#807090; color:white; padding-left:5;  padding-bottom:2; margin-top:6pt; margin-bottom:6pt;}
+H4 { margin-bottom:3px; margin-top:6pt; }
+TT { font-size:110%; font-weight:900; white-space:nowrap; }
+PRE { font-size:90%; }
+TABLE { border-collapse:collapse; }
+A:link, A:visited, A:active { color:#30055c; text-decoration: none; }
+.cmd { background-color:black; color:white; border:1px solid black; padding:3px; font-weight:bold; }
+.cmd2 { border:1px solid black; padding:3px; font-weight:bold; }
+.file { background-color:f8f8ff; border:1px solid #ccf; padding:2px; margin-top:3px; color:#000; }
+.leftside { float:left; margin-right:2em; margin-bottom:6pt; }
+tr.dim th,tr.dim td{ color:#ddd; }
+
+.code { background-color:f8f8ff; padding:2px; font-family:monospace; white-space:nowrap; vertical-align:top; }
+.frame { background-color:f0f0f0; border:1px solid black; padding:2px; font-family:monospace; } 
+.math { font-family:Times,Times Roman,serif; font-style:italic; font-weight:bold; white-space:nowrap; }
+.box { border:1px solid black; padding:3px; padding-left:8px; padding-right:8px; }
+
+th { white-space:nowrap; }
+tr.line th { border-bottom: 1px solid black;}
+td#r, th#r { text-align:right; padding-right:.5em; vertical-align:top; }
+td#c, th#c { text-align:center; padding-right:.5em; vertical-align:top; }
+td#l, th#l { text-align:left; padding-left:.5em; vertical-align:top; }
+span.input { color:red; }
