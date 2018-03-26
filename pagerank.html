@@ -3,13 +3,14 @@
   <head>
     <meta charset="utf-8" />
     <title>Sports Pagerank</title>
-    
-    <script type="text/javascript" src="vis.js"></script>
-    <link href="vis.css" rel="stylesheet" type="text/css" />
+
+    <script src="./dist/vis.js"></script>
+    <link href="./dist/vis.css" rel="stylesheet" type="text/css" />
     
     <script>document.write('<base href="' + document.location + '" />');</script>
     <link rel="stylesheet" href="style.css" />
     <script data-require="angular.js@1.2.x" src="https://code.angularjs.org/1.2.16/angular.js" data-semver="1.2.16"></script>
+
     <script src="app.js"></script>
   </head>
 
@@ -25,6 +26,9 @@
     link to the winning team.  If this makes no sense, google
     &quot;Google pagerank algorithms&quot;.  There are good explanations out there.</p>
 
+    <table>
+      <tr>
+	<td>
     <p>Enter scores here: Team1, Team2, Score1, Score2</p>
 
     <textarea name="scores" ng-model="scoreData" id="" cols="80" rows="10" 
@@ -34,7 +38,8 @@ Page B,Page C,0,1
 Page D,Page C,0,1
 '">
     </textarea>
-
+	</td>
+	<td>
     <table>
       <tr>
         <th>Team</th>
@@ -47,9 +52,16 @@ Page D,Page C,0,1
       </tr>
     </table>
 
-    <textarea name="scores" ng-model="dot" id="" cols="40" rows="10" 
+	</td>
+      </tr>
+      
+    </table>
+
+<!-- 
+    <textarea name="scores" ng-model="dot" id="" cols="80" rows="10" 
               ng-init="">
     </textarea>
+    -->
 
     <div id="graph"></div>
 

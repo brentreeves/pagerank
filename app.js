@@ -31,7 +31,7 @@ app.controller("TeamController", function($scope) {
 		ranks[n2] = [];
 	    if (!(x in ranks[n2]))
 		ranks[n2].push( x );
-	    labels += ( "\"" + x + "\" [label=\"" + x + "\n (" + n2 + ")" + "\"];\n");
+	    labels += ( "\"" + x + "\" [label=\"" + x + " (" + n2 + ")" + "\"];\n");
 	}
 	console.log("graph labels");
 	console.log(JSON.stringify(ranks));
@@ -227,6 +227,10 @@ app.controller("TeamController", function($scope) {
   var network = new vis.Network(container, data);
 */
 	var mygraph = document.getElementById('graph');
+	var options = {
+	    width: '100%',
+	    height: '100%'
+	};
 	var data = {
 //	    dot: 'dinetwork {node[shape=circle]; 1 -> 1 -> 2; 2 -> 3; 2 -- 4; 2 -> 1 }'
 	    dot: 'dinetwork {' + $scope.dot + '}\n'
