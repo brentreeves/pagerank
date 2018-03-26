@@ -1,0 +1,7 @@
+digraph {
+"Page A"->"Page B" [label="0.5"];
+"Page A"->"Page C" [label="0.5"];
+"Page C"->"Page A" [label="1"];
+"Page B"->"Page C" [label="1"];
+"Page D"->"Page C" [label="1"];
+}

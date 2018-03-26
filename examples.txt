@@ -1,0 +1,248 @@
+<!-- -
+Example 0
+Page A,Page B,1,1,
+
+
+http://www.cs.princeton.edu/~chazelle/courses/BIB/pagerank.htm
+
+Example 1 - works
+
+Page A,Page B,0,1,
+Page A,Page C,1,1,
+Page B,Page C,0,1,
+Page D,Page C,0,1,
+
+PR {"Page A":1.49,"Page B":0.78,"Page C":1.57,"Page D":0.15} 
+
+
+Example 2 - works
+
+Home,About,1,1,x
+Home,Product,1,1,x
+Home,Links,1,1,x
+Links,External A,0,1,x
+Links,External B,0,1,x
+Links,External C,0,1,x
+Links,External D,0,1,x
+
+PR {"Home":0.91,"About":0.41,"Product":0.41,"Links":0.41,"External A":0.22,"External B":0.22,"External C":0.22,"External D":0.22} 
+
+
+Example 3 - works
+
+Home,About,1,1,yo
+Home,Product,1,1,yo
+Home,Links,1,1,yo
+Links,External A,0,1,x
+Links,External B,0,1,x
+Links,External C,0,1,x
+Links,External D,0,1,x
+External A,Home,0,1,x
+External B,Home,0,1,x
+External C,Home,0,1,x
+External D,Home,0,1,x
+
+PR {"Home":3.35,"About":1.1,"Product":1.1,"Links":1.1,"External A":0.34,"External B":0.34,"External C":0.34,"External D":0.34} 
+
+Example 4 - works
+
+Home,About,1,1,yo
+Home,Product,1,1,yo
+Home,Links,1,1,yo
+Links,External A,0,1,x
+Links,External B,0,1,x
+Links,External C,0,1,x
+Links,External D,0,1,x
+Links,Review A,0,1,x
+Links,Review B,0,1,x
+Links,Review C,0,1,x
+Links,Review D,0,1,x
+Review A,Home,0,1,x
+Review B,Home,0,1,x
+Review C,Home,0,1,x
+Review D,Home,0,1,x
+
+PR 39 {"Home":2.439718941138075,"About":0.8412536999891213,"Product":0.8412536999891213,"Links":0.8412536999891213,"External A":0.22945173833230592,"External B":0.22945173833230592,"External C":0.22945173833230592,"External D":0.22945173833230592,"Review A":0.22945173833230592,"Review B":0.22945173833230592,"Review C":0.22945173833230592,"Review D":0.22945173833230592} 
+
+Example 5 - works
+
+Home,About,1,1,x
+Home,Product,1,1,x
+Home,More,1,1,x
+
+PR {"Home":1.91,"About":0.69,"Product":0.69,"More":0.69} 
+
+
+Example 6
+
+Home,About,0,1,x
+About,Product,0,1,x
+Product,More,0,1,x
+More,Home,0,1,x
+
+PR {"Home":1,"About":1,"Product":1,"More":1} 
+
+
+Example 7 happy
+
+Home,About,1,1,x
+About,Product,1,1,x
+Product,More,1,1,x
+More,Home,1,1,x
+
+PR {"Home":1,"About":1,"Product":1,"More":1} 
+
+Example 8 happy
+
+Site A,Home,0,1,x
+Home,About,1,1,x
+Home,Product,1,1,x
+Home,More,1,1,x
+Product,Site B,0,1,x
+
+Example 11 happy
+
+Page A,Page B,1,1,x
+Page B,Page C,0,1,x
+Page C,Page A,0,1,x
+Page C,Page D,0,1,x
+Page D,Page A,0,1,x
+
+PR {"Page A":2.275,"Page B":2.0837499999999998,"Page C":1.0355937499999999,"Page D":0.15000000000000002} 
+sb A 1.44, B 1.37, C 0.73, D 0.46
+
+Example 12 happy
+
+Page A,Page B,1,1,x
+Page B,Page C,1,1,x
+Page C,Page A,0,1,x
+Page C,Page D,1,1,x
+Page D,Page A,0,1,x
+
+PR {"Page A":1.2049060137892056,"Page B":1.4401883236960296,"Page C":0.9388877776602745,"Page D":0.41601820367041115} app.js:162
+Keys ["Page D","Page C","Page A","Page B"] app.js:168
+0.42: Page D app.js:171
+0.94: Page C app.js:171
+1.2: Page A app.js:171
+1.44: Page B 
+
+
+
+-->
+
+<!-- -
+Absolute Scores
+
+Fist FC,Los Aguilas,10,2,10/29/2014
+Inter Yo,Fuerza,10,3,10/29/2014
+Los Leones,Red Solo Cups,3,0,10/29/2014
+PT Pumas,Cosmos,2,2,10/29/2014
+ACU FIFA,The Has Beens,2,15,10/29/2014
+
+ACU FIFA,Red Solo Cups,9,0,11/5/2014
+Fist FC,Fuerza,4,0,11/5/2014
+Inter Yo,Cosmos,3,4,11/5/2014
+Los Leones,Los Aguilas,9,4,11/5/2014
+Fuerza,Fist FC,0,4,11/5/2014
+The Has Beens,PT Pumas,14,2,11/5/2014
+
+ACU FIFA,PT Pumas,9,6,11/12/2014
+Red Solo Cups,Los Aguilas,5,4,11/12/2014
+Fuerza,Los Leones,3,6,11/12/2014
+The Has Beens,Inter Yo,9,4,11/12/2014
+Fist FC,Cosmos,6,8,11/12/2014
+
+ACU FIFA,Los Aguilas,8,2,11/19/2014
+The Has Beens,Fist FC,14,2,11/19/2014
+Cosmos,Los Leones,7,4,11/19/2014
+Red Solo Cups,Fuerza,2,2,11/19/2014
+PT Pumas,Inter Yo,10,9,11/19/2014
+
+ACU FIFA,Fuerza,5,2,12/03/2014
+Cosmos,Los Aguilas,8,1,12/3/2014
+The Has Beens,Red Solo Cups,15,2,12/3/2014
+Los Leones,PT Pumas,7,5,12/3/2014
+Fist FC,Inter Yo,5,7,12/3/2014
+
+Cosmos,Fuerza,9,1,12/10/14
+Red Solo Cups,PT Pumas,14,4,12/10/14
+Los Leones,Inter Yo,5,4,12/10/14
+The Has Beens,Los Aguilas,13,4,12/10/14
+ACU FIFA,Fist FC,5,6,12/10/14
+
+Cosmos,Red Solo Cups,11,5,12/17/14
+ACU FIFA,Inter Yo,14,4,12/17/14
+The Has Beens,Los Leones,9,2,12/17/14
+Los Aguilas,Fuerza,5,7,12/17/14
+PT Pumas,Fist FC,7,7,12/17/14
+
+===
+
+Ryan:
+
+0.9728	 The Has Beens
+0.1502	 Cosmos
+0.1242	 ACU FIFA
+0.0794	 Los Leones
+0.067	 PT Pumas
+0.0541	 Inter Yo
+0.0392	 Fist FC
+0.0134	 Red Solo Cups
+0.0116	 Fuerza
+0.0078	 Los Aguilas
+
+ACU FIFA,The Has Beens,2,15,10/29/2014
+ACU FIFA,Red Solo Cups,9,0,11/5/2014
+ACU FIFA,PT Pumas,9,6,11/12/2014
+ACU FIFA,Los Aguilas,8,2,11/19/2014
+ACU FIFA,Fuerza,5,2,12/03/2014
+ACU FIFA,Fist
+ACU FIFA,Inter Yo
+
+Goal Difference
+
+
+Fist FC,Los Aguilas,8,0,10/29/2014
+Inter Yo,Fuerza,7,0,10/29/2014
+Los Leones,Red Solo Cups,3,0,10/29/2014
+ACU FIFA,The Has Beens,0,13,10/29/2014
+PT Pumas,Cosmos,0,0,10/29/2014
+
+ACU FIFA,Red Solo Cups,9,0,11/5/2014
+Fist FC,Fuerza,4,0,11/5/2014
+Inter Yo,Cosmos,0,1,11/5/2014
+Los Leones,Los Aguilas,5,0,11/5/2014
+The Has Beens,PT Pumas,12,0,11/5/2014
+
+ACU FIFA,PT Pumas,3,0,11/12/2014
+Red Solo Cups,Los Aguilas,1,0,11/12/2014
+Fuerza,Los Leones,0,3,11/12/2014
+The Has Beens,Inter Yo,5,0,11/12/2014
+Fist FC,Cosmos,0,2,11/12/2014
+
+ACU FIFA,Los Aguilas,6,0,11/19/2014
+The Has Beens,Fist FC,0,12,11/19/2014
+Cosmos,Los Leones,3,0,11/19/2014
+Red Solo Cups,Fuerza,0,0,11/19/2014
+PT Pumas,Inter Yo,1,0,11/19/2014
+
+ACU FIFA,Fuerza,3,0,12/03/2014
+Cosmos,Los Aguilas,7,0,12/3/2014
+The Has Beens,Red Solo Cups,13,0,12/3/2014
+Los Leones,PT Pumas,2,0,12/3/2014
+Fist FC,Inter Yo,0,2,12/3/2014
+
+Cosmos,Fuerza,8,0,12/10/14
+Red Solo Cups,PT Pumas,10,0,12/10/14
+Los Leones,Inter Yo,1,0,12/10/14
+The Has Beens,Los Aguilas,9,0,12/10/14
+ACU FIFA,Fist FC,0,1,12/10/14
+
+Cosmos,Red Solo Cups,6,0,12/17/14
+ACU FIFA,Inter Yo,10,0,12/17/14
+The Has Beens,Los Leones,7,0,12/17/14
+Los Aguilas,Fuerza,0,2,12/17/14
+PT Pumas,Fist FC,0,0,12/17/14
+
+
+ -->

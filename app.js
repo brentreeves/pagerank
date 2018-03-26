@@ -1,8 +1,54 @@
 var app = angular.module('pager', []);
 
 app.controller("TeamController", function($scope) {
+    var keys = [];
+
+    function d2(x) {
+	return (Math.round( x * 100) / 100);
+    }
+
+    function dot(inArray) {
+	// rankdir=LR;
+	// remember the weights and add to assoc array by weight?
+	// {rank=same, b,c,d} {rank=same, e,f,g}
+
+
+	var ranks = '';
+	for (var i=0; i< keys.length; i++) {
+	    ranks += ' -> "' + keys[i] + '"';
+	}
+	ranks += ';';
+	ranks = ranks.substr(3);
+
+	console.log('Ranks: ' + ranks);
+
+//	str = "digraph {\n";
+	var labels = '';
+	var ranks = {};
+	for (var x in $scope.pageRank) {
+	    var n2 = d2($scope.pageRank[x]);
+	    if (!(n2 in ranks)) 
+		ranks[n2] = [];
+	    if (!(x in ranks[n2]))
+		ranks[n2].push( x );
+	    labels += ( "\"" + x + "\" [label=\"" + x + "\n (" + n2 + ")" + "\"];\n");
+	}
+	console.log("graph labels");
+	console.log(JSON.stringify(ranks));
+
+	var str = '';
+	for (var x in inArray) {
+	    for (var y in inArray[x]) {
+		str += ( "\"" + x + "\"->\"" + y + "\";\n");
+		// + "(" + $scope.pageRank[x] +")
+	    }
+	}
+//	str += "}\n";
+	return labels + str;
+    }
 
     function init_counts() {
+	keys = [];
 	$scope.teamList = [];
 	$scope.backlinks = {}; // who links to me?
 	
@@ -84,7 +130,7 @@ app.controller("TeamController", function($scope) {
 	// fractionize
 //	console.log("fractionize");
 	for (key in $scope.linkCount) {
-//	    console.log("fractionize " + key + " sum: " + $scope.linkSum[key]);
+	    console.log("fractionize " + key + " sum: " + $scope.linkSum[key]);
 	    $scope.fractions[key] = {};
 	    for (team in $scope.linkCount[key] ) {
 		if (!(team in $scope.fractions[key])) {
@@ -94,7 +140,7 @@ app.controller("TeamController", function($scope) {
 		var n2 = Number($scope.linkSum[key]);
 		if (n2 == 0)
 		    n2 = 1.0;
-//		console.log ("fractionize " + key + " team "+ team + " %: " + (n1 / n2) + " (" + n1 + "/" + n2 +")" );
+		console.log ("fractionize [" + key + "] team ["+ team + "] %: " + (n1 / n2) + " (" + n1 + "/" + n2 +")" );
 		$scope.fractions[key][team] = n1 / n2;
 	    }
 	}
@@ -109,9 +155,11 @@ app.controller("TeamController", function($scope) {
 	for (var i in $scope.teamList)
 	    $scope.pageRank[ $scope.teamList[i]] = 1.0;
 
-//	console.log("PR..........");
+	console.log("PR -------------------------------------------------------------------.");
+	console.log("pageRanks: " + JSON.stringify($scope.pageRank) );
+	console.log("fractions: " + JSON.stringify($scope.fractions) );
 
-	var N = 40;
+	var N = 60;
 	for (iteration=0; iteration<N; iteration++) {
 	    var sum = 0.0;
 	    for (var i in $scope.teamList) {
@@ -120,16 +168,17 @@ app.controller("TeamController", function($scope) {
 		sum = 0.0;
 		
 		for (var team in $scope.backlinks[key]) {
-		    sum = sum + ( $scope.pageRank[team] * $scope.fractions[team][key]);
+		    sum = sum + ( $scope.pageRank[team] * $scope.fractions[team][key] );
 
-//		    console.log("PR...  " + key + " " + team + " pr: " + $scope.pageRank[team] +"  fraction: "+ Number($scope.fractions[key][team]) + " sum: " + sum);
+//		    console.log("PR...  key [" + key + "] team [" + team + "] pr: " + $scope.pageRank[team] +
+//				"  fraction: "+ Number( $scope.fractions[team][key] ) + " sum: " + sum);
 		    
 		}
 		var x = d1 + (d * sum);
 //		console.log("PR("+ key +") is now " + x)
 		$scope.pageRank[key] = x;
 	    }
-//	    console.log("PR " + iteration + " "+ JSON.stringify($scope.pageRank));
+	    console.log("PR " + iteration + " "+ JSON.stringify($scope.pageRank));
 	}
 
 
@@ -144,18 +193,45 @@ app.controller("TeamController", function($scope) {
 //	console.log("fractions " + JSON.stringify($scope.fractions));
 //	console.log("PR " + JSON.stringify($scope.pageRank));
 	
-	var keys = Object.keys($scope.pageRank);
+	keys = Object.keys($scope.pageRank);
+//	console.log("Keys before: " + JSON.stringify(keys) );
+//	for (var kk in keys)
+//	    console.log("kk: " + kk + " key: " + keys[kk] + " #: " + $scope.pageRank[ keys[kk] ] );
+
 //	keys.sort( function(a,b) {return a>b;});
-	keys.sort( function(a,b) {return $scope.pageRank[a] <= $scope.pageRank[b];});
+	keys.sort( function(a,b) {return Number( $scope.pageRank[b] ) - Number( $scope.pageRank[a]) ;});
+
+//
+//	console.log("Keys after : " + JSON.stringify(keys) );
+//	for (var kk in keys)
+//	    console.log("kk: " + kk + " key: " + keys[kk] + " #: " + $scope.pageRank[ keys[kk] ] );
+
+
 
 //	console.log("Keys " + JSON.stringify(keys));
 	for (var k in keys ) {
 	    var x = keys[k];
-	    var daNum = (Math.round( $scope.pageRank[ x ] * 100) / 100);
+	    var daNum = (Math.round( $scope.pageRank[ x ] * 100) / 100); // caution k vs x
 //	    console.log( daNum + "," + x);
 	    $scope.prList.push({team: x, pagerank: Number(daNum) });
 	}
 
+//	$scope.dot = dot($scope.backlinks);
+	$scope.dot = dot($scope.fractions);
+
+/*
+  var container = document.getElementById('mynetwork');
+  var data = {
+    dot: 'dinetwork {node[shape=circle]; 1 -> 1 -> 2; 2 -> 3; 2 -- 4; 2 -> 1 }'
+  };
+  var network = new vis.Network(container, data);
+*/
+	var mygraph = document.getElementById('graph');
+	var data = {
+//	    dot: 'dinetwork {node[shape=circle]; 1 -> 1 -> 2; 2 -> 3; 2 -- 4; 2 -> 1 }'
+	    dot: 'dinetwork {' + $scope.dot + '}\n'
+	}
+	var network = new vis.Network(mygraph, data);
     });
 
 });
